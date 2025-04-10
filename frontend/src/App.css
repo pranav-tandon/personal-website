@@ -1,0 +1,95 @@
+/* Additional custom styles */
+.hero-section {
+  background-image: linear-gradient(rgba(0, 38, 77, 0.8), rgba(0, 38, 77, 0.8)), url('https://images.unsplash.com/photo-1557264337-e8a93017fe92');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.technology-bg {
+  background-image: url('https://images.unsplash.com/photo-1462556791646-c201b8241a94');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.stealth-card {
+  border-left: 4px solid #0066cc;
+}
+
+.skills-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.tech-tag {
+  background-color: rgba(0, 102, 204, 0.1);
+  color: #0066cc;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  display: inline-block;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.testimonial-card {
+  position: relative;
+}
+
+.testimonial-card::before {
+  content: '"';
+  font-size: 4rem;
+  position: absolute;
+  top: -1rem;
+  left: 1rem;
+  color: rgba(0, 102, 204, 0.2);
+  font-family: serif;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 2rem;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  background-color: #0066cc;
+}
+
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  top: 1.5rem;
+  bottom: -2rem;
+  width: 1px;
+  background-color: #b3d1ff;
+}
+
+.timeline-item:last-child::after {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .gradient-border {
+    position: relative;
+  }
+  
+  .gradient-border::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #0066cc, #4d94ff);
+  }
+}

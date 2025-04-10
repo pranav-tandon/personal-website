@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Roboto', 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply bg-light text-dark;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Open Sans', sans-serif;
+  @apply font-semibold;
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-2 rounded-md transition-all duration-300 font-medium;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-secondary;
+  }
+
+  .container-section {
+    @apply max-w-6xl mx-auto px-4 py-12 md:py-20;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold mb-8 text-center;
+  }
+  
+  .section-subtitle {
+    @apply text-xl md:text-2xl font-semibold mb-6;
+  }
+
+  .card {
+    @apply bg-white rounded-lg shadow-md p-6 transition-all duration-300;
+  }
+  
+  .highlight {
+    @apply text-primary font-semibold;
+  }
+}
