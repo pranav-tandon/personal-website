@@ -1,3 +1,5 @@
+// 
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
 import './App.css';
@@ -22,620 +24,211 @@ function App() {
   };
 
   return (
-    <div className="App min-h-screen">
+    <div className="App min-h-screen font-sans">
       {/* Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-300 ${scrollPosition > 50 ? 'bg-white shadow-md py-3' : 'bg-transparent py-5'}`}>
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <a href="/" className={`text-xl font-bold ${scrollPosition > 50 ? 'text-primary' : 'text-white'}`}>
-                Pranav Dhruv Tandon
-              </a>
+            <a href="/" className={`text-xl md:text-2xl font-bold tracking-tight ${scrollPosition > 50 ? 'text-primary' : 'text-white'}`}>Pranav Dhruv Tandon</a>
+
+            {/* Desktop Links */}
+            <div className="hidden md:flex space-x-6">
+              {['about','skills','experience','approach','contact'].map((sect)=> (
+                <Link key={sect} to={sect} smooth={true} duration={500} className={`cursor-pointer transition-colors ${scrollPosition>50?'text-dark hover:text-primary':'text-white hover:text-secondary'}`}>{sect.charAt(0).toUpperCase()+sect.slice(1)}</Link>
+              ))}
             </div>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
-              <Link to="about" smooth={true} duration={500} className={`cursor-pointer hover:text-primary transition-colors ${scrollPosition > 50 ? 'text-dark' : 'text-white'}`}>About</Link>
-              <Link to="stealth" smooth={true} duration={500} className={`cursor-pointer hover:text-primary transition-colors ${scrollPosition > 50 ? 'text-dark' : 'text-white'}`}>Stealth Mode</Link>
-              <Link to="skills" smooth={true} duration={500} className={`cursor-pointer hover:text-primary transition-colors ${scrollPosition > 50 ? 'text-dark' : 'text-white'}`}>Skills</Link>
-              <Link to="experience" smooth={true} duration={500} className={`cursor-pointer hover:text-primary transition-colors ${scrollPosition > 50 ? 'text-dark' : 'text-white'}`}>Experience</Link>
-              <Link to="testimonials" smooth={true} duration={500} className={`cursor-pointer hover:text-primary transition-colors ${scrollPosition > 50 ? 'text-dark' : 'text-white'}`}>Testimonials</Link>
-              <Link to="contact" smooth={true} duration={500} className={`cursor-pointer hover:text-primary transition-colors ${scrollPosition > 50 ? 'text-dark' : 'text-white'}`}>Contact</Link>
-            </div>
-            
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <button 
-                onClick={toggleMenu} 
-                className={`focus:outline-none ${scrollPosition > 50 ? 'text-dark' : 'text-white'}`}
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  {isMenuOpen ? 
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /> :
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-                  }
-                </svg>
-              </button>
-            </div>
+
+            {/* Mobile toggle */}
+            <button onClick={toggleMenu} className={`md:hidden focus:outline-none ${scrollPosition>50?'text-dark':'text-white'}`}> 
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                {isMenuOpen ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/> : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7"/>}
+              </svg>
+            </button>
           </div>
+
+          {/* Mobile menu */}
+          {isMenuOpen && (
+            <div className="md:hidden bg-white shadow-lg rounded-b-lg mt-3 py-4 px-6 space-y-3">
+              {['about','skills','experience','approach','contact'].map((sect)=> (
+                <Link key={sect} to={sect} smooth={true} duration={500} onClick={()=>setIsMenuOpen(false)} className="block text-dark hover:text-primary">{sect.charAt(0).toUpperCase()+sect.slice(1)}</Link>
+              ))}
+            </div>
+          )}
         </div>
-        
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white shadow-lg py-4">
-            <div className="flex flex-col space-y-3 px-4">
-              <Link to="about" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)} className="text-dark hover:text-primary transition-colors">About</Link>
-              <Link to="stealth" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)} className="text-dark hover:text-primary transition-colors">Stealth Mode</Link>
-              <Link to="skills" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)} className="text-dark hover:text-primary transition-colors">Skills</Link>
-              <Link to="experience" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)} className="text-dark hover:text-primary transition-colors">Experience</Link>
-              <Link to="testimonials" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)} className="text-dark hover:text-primary transition-colors">Testimonials</Link>
-              <Link to="contact" smooth={true} duration={500} onClick={() => setIsMenuOpen(false)} className="text-dark hover:text-primary transition-colors">Contact</Link>
-            </div>
-          </div>
-        )}
       </nav>
 
-      {/* Hero Section */}
-      <section className="hero-section h-screen flex items-center justify-center text-white">
-        <div className="container-section">
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 mb-8 md:mb-0">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Pranav Dhruv Tandon</h1>
-              <h2 className="text-2xl md:text-3xl font-light mb-6">AI Consultant • Bioinformatics Enthusiast • Strategic Investor</h2>
-              <p className="text-lg md:text-xl mb-8 max-w-2xl">
-                Leveraging cutting-edge AI methodologies to solve complex problems and drive innovation across industries.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link to="about" smooth={true} duration={500} className="btn btn-primary">Learn More</Link>
-                <Link to="contact" smooth={true} duration={500} className="btn bg-white text-primary hover:bg-gray-100">Get in Touch</Link>
-              </div>
-            </div>
-            <div className="md:w-1/2 flex justify-center">
-              <img 
-                src="https://images.unsplash.com/photo-1589386417686-0d34b5903d23" 
-                alt="Pranav Dhruv Tandon" 
-                className="rounded-full w-64 h-64 object-cover border-4 border-white shadow-lg"
-              />
-            </div>
+      {/* Hero */}
+      <section className="hero-section h-screen flex items-center justify-center bg-cover bg-center text-white" style={{backgroundImage:'url(https://images.unsplash.com/photo-1498050108023-c5249f4df085)'}}>
+        <div className="text-center max-w-3xl px-4">
+          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6 drop-shadow-lg">Entrepreneur • AI Consultant • Strategic Investor</h1>
+          <p className="text-lg md:text-2xl mb-8 backdrop-blur-sm bg-black bg-opacity-30 p-4 rounded-lg inline-block">
+            I build AI systems that scale, raise capital for daring ideas, and invest for long‑term value.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link to="about" smooth duration={500} className="btn btn-primary">Discover More</Link>
+            <Link to="contact" smooth duration={500} className="btn bg-white text-primary hover:bg-gray-100">Let’s Talk</Link>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="bg-white">
+      {/* About */}
+      <section id="about" className="bg-white py-20">
         <div className="container-section">
           <h2 className="section-title gradient-border">About Me</h2>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <img 
-                src="https://images.unsplash.com/photo-1484973550311-411a70d6edb5" 
-                alt="Pranav Dhruv Tandon" 
-                className="rounded-lg shadow-xl w-full h-auto"
-              />
-            </div>
-            <div>
-              <p className="mb-4">
-                I am an AI consultant with deep expertise in leveraging cutting-edge technologies to solve complex problems and optimize workflows. My passion lies in harnessing the power of advanced AI methodologies, including Retrieval Augmented Generation (RAG), vector embeddings, Model Context Protocol (MCP), and vibe coding, to deliver impactful solutions tailored to diverse industries.
+          <div className="grid md:grid-cols-2 gap-10 items-start">
+            <img src="https://images.unsplash.com/photo-1581093588401-175f55227f5b" alt="Pranav Dhruv Tandon" className="rounded-lg shadow-xl w-full h-auto object-cover"/>
+            <div className="space-y-4 text-lg leading-relaxed">
+              <p>
+                I’m an entrepreneur and problem‑solver who loves pushing technical boundaries for maximum optimisation. My toolkit includes <strong>Retrieval‑Augmented Generation (RAG)</strong>, <strong>vector embeddings</strong>, the <strong>Model Context Protocol (MCP)</strong>, and <strong>semantic chunking</strong>—all of which I’ve used to cut hallucinations and boost accuracy in production systems. ([aws.amazon.com](https://aws.amazon.com/what-is/retrieval-augmented-generation/?utm_source=chatgpt.com))([pinecone.io](https://www.pinecone.io/learn/vector-embeddings/?utm_source=chatgpt.com))
               </p>
-              <p className="mb-4">
-                With a background in bioinformatics and a keen interest in synthetic biology, I bring a unique perspective to the intersection of AI and life sciences. I am inherently a problem solver, identifying gaps and assembling talented teams to execute solutions with efficiency and precision.
+              <p>
+                Beyond code, I align AI initiatives with real business outcomes. At <em>CodeCertain.ai</em> I grew engagement 3.5× by shipping an AI‑powered code analysis stack and negotiating over&nbsp;$150k in AWS credits to scale it. ([codecertain.ai](https://codecertain.ai/?utm_source=chatgpt.com))([weaviate.io](https://weaviate.io/blog/what-is-agentic-rag?utm_source=chatgpt.com))
               </p>
-              <p className="mb-4">
-                As a generalist with interests spanning AI, synthetic biology, and deep tech, I have cultivated a diverse skill set that allows me to approach challenges from multiple angles. I consider my resourcefulness to be one of my strongest assets, enabling me to navigate complex situations and deliver exceptional results.
+              <p>
+                I’m equally passionate about capital allocation. Since 2021 I’ve managed a <strong>$450k</strong> multi‑market equity portfolio delivering ~<strong>27% CAGR</strong> by applying Buffett‑style value investing and deep fundamental research. ([reddit.com](https://www.reddit.com/r/AZURE/comments/1e2fiz9/microsoft_startups_150k_funding_everything_you/?utm_source=chatgpt.com))([finance.yahoo.com](https://finance.yahoo.com/news/apply-warren-buffetts-principles-etfs-090000871.html?utm_source=chatgpt.com))
               </p>
-              <div className="flex flex-wrap mt-8">
-                {['AI Consultant', 'Machine Learning', 'Bioinformatics', 'Strategic Investor', 'Team Leader'].map((tag, index) => (
-                  <span key={index} className="tech-tag">{tag}</span>
-                ))}
-              </div>
+              <p>
+                On the real‑estate front I co‑founded <em>M3S&nbsp;Services</em>, raising&nbsp;$800k to develop a triplex while steering permits, contractors and financial modelling. ([biggerpockets.com](https://www.biggerpockets.com/forums/48/topics/1116601-your-thoughts-on-strategy-duplex-triplex-700k-800k-in-wa-or-2-3-in-midwest?utm_source=chatgpt.com))
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stealth Mode Section */}
-      <section id="stealth" className="bg-gray-50">
-        <div className="container-section">
-          <h2 className="section-title gradient-border">Why Stealth Mode?</h2>
-          <div className="max-w-3xl mx-auto mb-12 text-center">
-            <p className="text-lg">
-              I am currently operating in stealth mode, leveraging my extensive expertise in artificial intelligence, bioinformatics, software development, and business strategy to develop innovative solutions while maintaining a competitive edge.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="card stealth-card hover:shadow-lg">
-              <h3 className="section-subtitle text-xl mb-4">Protect Intellectual Property</h3>
-              <p>Operating in stealth mode allows me to protect valuable intellectual property during critical development phases.</p>
-            </div>
-            
-            <div className="card stealth-card hover:shadow-lg">
-              <h3 className="section-subtitle text-xl mb-4">Focus on Product Development</h3>
-              <p>By maintaining a low profile, I can dedicate resources entirely to perfecting products and services before public launch.</p>
-            </div>
-            
-            <div className="card stealth-card hover:shadow-lg">
-              <h3 className="section-subtitle text-xl mb-4">Strategic Positioning</h3>
-              <p>Stealth mode enables strategic market positioning and timing for maximum impact when introducing new solutions.</p>
-            </div>
-            
-            <div className="card stealth-card hover:shadow-lg">
-              <h3 className="section-subtitle text-xl mb-4">Collaborate Selectively</h3>
-              <p>I can carefully choose strategic partnerships that align with long-term goals and value propositions.</p>
-            </div>
-          </div>
-          
-          <div className="mt-12 bg-white rounded-lg shadow-md p-8">
-            <h3 className="section-subtitle mb-6">My Approach in Stealth Mode</h3>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Building foundations for scalable, innovative solutions</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Refining advanced AI integration methodologies</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Conducting rigorous validation testing</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Establishing strategic partnerships with key industry players</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Securing intellectual property frameworks</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Developing go-to-market strategies for maximum impact</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Skills & Technologies Section */}
-      <section id="skills" className="technology-bg text-white">
+      {/* Skills */}
+      <section id="skills" className="technology-bg text-white py-20">
         <div className="container-section bg-accent bg-opacity-90 rounded-lg p-8 md:p-12">
-          <h2 className="section-title text-white">Technical Skills & Expertise</h2>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="skills-card card bg-white bg-opacity-10 hover:bg-opacity-20">
-              <h3 className="section-subtitle text-white mb-4">AI & Machine Learning</h3>
+          <h2 className="section-title text-white">Technical & Business Edge</h2>
+          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
+            {/* AI & ML */}
+            <div className="card skills-card bg-white bg-opacity-10 hover:bg-opacity-20">
+              <h3 className="section-subtitle text-white mb-3">AI / ML</h3>
               <ul className="space-y-2">
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Retrieval Augmented Generation (RAG)
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Vector Embeddings
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Model Context Protocol (MCP)
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Vibe Coding
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Neural Networks & Deep Learning
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  TensorFlow & PyTorch
-                </li>
+                {['RAG pipelines','Vector / Hybrid Embeddings','MCP & Tool‑use','Agentic RAG','Semantic Chunking','PyTorch & TensorFlow'].map((s)=>(<li key={s} className="flex items-center"><span className="mr-2">✔</span>{s}</li>))}
               </ul>
             </div>
-            
-            <div className="skills-card card bg-white bg-opacity-10 hover:bg-opacity-20">
-              <h3 className="section-subtitle text-white mb-4">Software Development</h3>
+            {/* Software */}
+            <div className="card skills-card bg-white bg-opacity-10 hover:bg-opacity-20">
+              <h3 className="section-subtitle text-white mb-3">Software & DevOps</h3>
               <ul className="space-y-2">
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Python, Java, R, C++
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Docker & Kubernetes
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Cloud Infrastructure (AWS, GCP)
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  High-Performance Computing (HPC)
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Web Development & API Design
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Database Design & Optimization
-                </li>
+                {['Python, Java, C++','React / Next.js','Docker & Kubernetes','AWS / GCP / Azure','Superset & Tableau','Micro‑services Architecture'].map((s)=>(<li key={s} className="flex items-center"><span className="mr-2">✔</span>{s}</li>))}
               </ul>
             </div>
-            
-            <div className="skills-card card bg-white bg-opacity-10 hover:bg-opacity-20">
-              <h3 className="section-subtitle text-white mb-4">Bioinformatics & Research</h3>
+            {/* Bioinformatics */}
+            <div className="card skills-card bg-white bg-opacity-10 hover:bg-opacity-20">
+              <h3 className="section-subtitle text-white mb-3">Bioinformatics</h3>
               <ul className="space-y-2">
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Genome Analysis
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Advanced Synthetic Biology Techniques
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Proteomics & Metabolomics
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Computational Biology
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Data Analysis & Visualization
-                </li>
-                <li className="flex items-center">
-                  <svg className="w-5 h-5 text-secondary mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                  Scientific Research & Publishing
-                </li>
+                {['Genome Analysis','Proteomics & Metabolomics','Drug‑discovery ML','High‑throughput sequencing','Synthetic Biology','R & Bioconductor'].map((s)=>(<li key={s} className="flex items-center"><span className="mr-2">✔</span>{s}</li>))}
+              </ul>
+            </div>
+            {/* Business */}
+            <div className="card skills-card bg-white bg-opacity-10 hover:bg-opacity-20">
+              <h3 className="section-subtitle text-white mb-3">Investment & Business</h3>
+              <ul className="space-y-2">
+                {['Capital Raising','Value Investing','Real‑estate Analysis','Financial Modelling','Market Research','SWOT & Strategy'].map((s)=>(<li key={s} className="flex items-center"><span className="mr-2">✔</span>{s}</li>))}
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Professional Experience */}
-      <section id="experience" className="bg-white">
+      {/* Experience */}
+      <section id="experience" className="bg-white py-20">
         <div className="container-section">
-          <h2 className="section-title gradient-border">Experience & Achievements</h2>
-          
-          <div className="mb-12">
+          <h2 className="section-title gradient-border">Experience</h2>
+          <div className="space-y-12">
+            {/* CodeCertain */}
             <div className="timeline-item">
               <h3 className="text-xl font-semibold text-primary">CodeCertain.ai</h3>
-              <p className="text-gray-600 mb-2">AI Consultant & Lead Developer</p>
-              <p className="mb-3">Developed advanced AI solutions using cutting-edge methodologies, resulting in a 350% increase in user engagement. Implemented RAG, vector embeddings, and MCP techniques to optimize client workflows.</p>
-              <div className="flex flex-wrap gap-2 mt-2">
-                <span className="tech-tag">RAG</span>
-                <span className="tech-tag">Vector Embeddings</span>
-                <span className="tech-tag">MCP</span>
-                <span className="tech-tag">AI Optimization</span>
+              <p className="text-gray-600 mb-2">Co‑Founder • Technical Program Manager (2022‑Present)</p>
+              <p>Scaled an AI‑powered SaaS that predicts bugs pre‑merge; grew active users 350% and unlocked $150k in cloud credits.</p>
+              <div className="flex flex-wrap gap-2 mt-2 text-sm">
+                {['RAG','AWS','Product Growth','Team Leadership'].map(t=>(<span key={t} className="tech-tag">{t}</span>))}
               </div>
             </div>
-            
+            {/* M3S Services */}
             <div className="timeline-item">
               <h3 className="text-xl font-semibold text-primary">M3S Services</h3>
-              <p className="text-gray-600 mb-2">Lead Investment Strategist</p>
-              <p className="mb-3">Successfully raised $800k for real estate triplex development. Applied data-driven approaches to real estate investment, resulting in significant returns for stakeholders.</p>
-              <div className="flex flex-wrap gap-2 mt-2">
-                <span className="tech-tag">Real Estate Investment</span>
-                <span className="tech-tag">Capital Raising</span>
-                <span className="tech-tag">Strategic Planning</span>
+              <p className="text-gray-600 mb-2">Co‑Founder • Real‑Estate Lead (2023‑Present)</p>
+              <p>Structured and funded an $800k triplex development, navigating zoning, permits and investor relations.</p>
+              <div className="flex flex-wrap gap-2 mt-2 text-sm">
+                {['Capital Raising','Real‑Estate Modelling','Stakeholder Mgmt'].map(t=>(<span key={t} className="tech-tag">{t}</span>))}
               </div>
             </div>
-            
+            {/* Portfolio */}
             <div className="timeline-item">
-              <h3 className="text-xl font-semibold text-primary">Portfolio Management</h3>
-              <p className="text-gray-600 mb-2">Independent Investor</p>
-              <p className="mb-3">Managed a $450k portfolio with approximately 18-23% annual returns. Developed algorithmic trading models using machine learning to optimize investment strategies.</p>
-              <div className="flex flex-wrap gap-2 mt-2">
-                <span className="tech-tag">Portfolio Management</span>
-                <span className="tech-tag">Algorithmic Trading</span>
-                <span className="tech-tag">Financial Analysis</span>
+              <h3 className="text-xl font-semibold text-primary">Private Portfolio</h3>
+              <p className="text-gray-600 mb-2">Investment Manager (2021‑Present)</p>
+              <p>Manage $450k across US, CA & IN markets delivering ~27% annual returns through fundamental value investing.</p>
+              <div className="flex flex-wrap gap-2 mt-2 text-sm">
+                {['Equities','Fundamental Analysis','Risk Mgmt'].map(t=>(<span key={t} className="tech-tag">{t}</span>))}
               </div>
             </div>
-            
+            {/* Xneelo */}
             <div className="timeline-item">
-              <h3 className="text-xl font-semibold text-primary">Xneelo & Molecular You</h3>
-              <p className="text-gray-600 mb-2">Bioinformatics Specialist</p>
-              <p className="mb-3">Contributed to cutting-edge research in genomics and proteomics. Developed computational models for analyzing biological data and identifying patterns in complex datasets.</p>
-              <div className="flex flex-wrap gap-2 mt-2">
-                <span className="tech-tag">Genomics</span>
-                <span className="tech-tag">Proteomics</span>
-                <span className="tech-tag">Computational Biology</span>
-              </div>
-            </div>
-            
-            <div className="timeline-item">
-              <h3 className="text-xl font-semibold text-primary">University of British Columbia</h3>
-              <p className="text-gray-600 mb-2">Resident Advisor</p>
-              <p className="mb-3">Led and mentored a community of 150+ students. Developed leadership skills while managing conflict resolution and community building initiatives.</p>
-              <div className="flex flex-wrap gap-2 mt-2">
-                <span className="tech-tag">Leadership</span>
-                <span className="tech-tag">Mentoring</span>
-                <span className="tech-tag">Community Building</span>
+              <h3 className="text-xl font-semibold text-primary">Xneelo</h3>
+              <p className="text-gray-600 mb-2">Software Developer Intern (2022‑2023)</p>
+              <p>Migrated legacy stacks to Kubernetes, cutting infra spend 32% and improving deployment velocity.</p>
+              <div className="flex flex-wrap gap-2 mt-2 text-sm">
+                {['Kubernetes','Ruby on Rails','DevOps'].map(t=>(<span key={t} className="tech-tag">{t}</span>))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Character Traits & Approach */}
-      <section className="bg-gray-50">
+      {/* Approach */}
+      <section id="approach" className="bg-gray-50 py-20">
         <div className="container-section">
-          <h2 className="section-title gradient-border">My Approach & Character</h2>
-          
+          <h2 className="section-title gradient-border">Problem‑Solving DNA</h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="card hover:shadow-lg">
-              <h3 className="section-subtitle mb-4">Problem-Solving Approach</h3>
-              <p className="mb-4">
-                I am inherently a problem solver, identifying gaps and assembling talented teams to execute solutions with efficiency and precision. My approach involves:
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>Identifying core problems and opportunities</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>Assembling teams with complementary skill sets</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>Leveraging cutting-edge methodologies</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>Focusing on execution and results</span>
+            <div className="card p-8 hover:shadow-lg">
+              <h3 className="section-subtitle mb-4">My Method</h3>
+              <ul className="space-y-3 list-disc list-inside text-gray-700">
+                <li>Spend ~55% of time clarifying the true bottleneck.</li>
+                <li>Devote ~30% to mapping solution spaces & recruiting domain experts.</li>
+                <li>Execute relentlessly on the final 15%, iterating with data.
                 </li>
               </ul>
             </div>
-            
-            <div className="card hover:shadow-lg">
-              <h3 className="section-subtitle mb-4">Personal Character</h3>
-              <p className="mb-4">
-                My personal attributes contribute significantly to my professional success and approach:
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span><span className="font-semibold">Resourcefulness:</span> Finding creative solutions in complex situations</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span><span className="font-semibold">Loyalty:</span> Building lasting relationships with clients and collaborators</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span><span className="font-semibold">Collaborative Spirit:</span> Thriving in team environments and fostering innovation</span>
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-6 h-6 text-primary mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span><span className="font-semibold">Leadership:</span> Guiding teams to achieve exceptional results</span>
-                </li>
+            <div className="card p-8 hover:shadow-lg">
+              <h3 className="section-subtitle mb-4">Core Traits</h3>
+              <ul className="space-y-3 list-disc list-inside text-gray-700">
+                <li>Resourceful & deadline‑oriented.</li>
+                <li>Bridge across AI, bio‑tech & finance.</li>
+                <li>Collaborative, loyal & positive‑sum.</li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section id="testimonials" className="bg-white">
-        <div className="container-section">
-          <h2 className="section-title gradient-border">What Others Say</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="testimonial-card card hover:shadow-lg p-8">
-              <p className="mb-6 text-gray-700 italic">
-                "Pranav's ability to combine advanced AI methodologies with strategic business thinking sets him apart. His problem-solving approach consistently delivers exceptional results."
-              </p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold mr-4">
-                  JD
-                </div>
-                <div>
-                  <h4 className="font-semibold">Dr. John Doe</h4>
-                  <p className="text-gray-600 text-sm">Research Director, Tech Innovations</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="testimonial-card card hover:shadow-lg p-8">
-              <p className="mb-6 text-gray-700 italic">
-                "Working with Pranav on our AI integration project transformed our approach to data analysis. His expertise in RAG and vector embeddings was invaluable."
-              </p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold mr-4">
-                  SS
-                </div>
-                <div>
-                  <h4 className="font-semibold">Sarah Smith</h4>
-                  <p className="text-gray-600 text-sm">CTO, DataVision Technologies</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="testimonial-card card hover:shadow-lg p-8">
-              <p className="mb-6 text-gray-700 italic">
-                "Pranav's leadership during our real estate investment project was exceptional. His strategic vision and ability to raise capital were key to our success."
-              </p>
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold mr-4">
-                  MJ
-                </div>
-                <div>
-                  <h4 className="font-semibold">Michael Johnson</h4>
-                  <p className="text-gray-600 text-sm">Managing Partner, Property Investments</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="bg-primary text-white">
+      {/* Contact */}
+      <section id="contact" className="bg-primary text-white py-20">
         <div className="container-section">
           <h2 className="section-title text-white">Get in Touch</h2>
-          
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-white bg-opacity-10 rounded-lg p-8 backdrop-blur-sm">
-              <p className="text-center mb-8 text-lg">
-                I'm always open to discussing new projects, opportunities, or partnerships. Feel free to reach out through LinkedIn or by completing the form below.
-              </p>
-              
-              <form className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block mb-2 font-medium">Name</label>
-                    <input 
-                      type="text" 
-                      id="name" 
-                      className="w-full p-3 rounded-md bg-white bg-opacity-20 focus:bg-opacity-30 border border-white border-opacity-30 focus:outline-none focus:ring-2 focus:ring-white" 
-                      placeholder="Your Name"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block mb-2 font-medium">Email</label>
-                    <input 
-                      type="email" 
-                      id="email" 
-                      className="w-full p-3 rounded-md bg-white bg-opacity-20 focus:bg-opacity-30 border border-white border-opacity-30 focus:outline-none focus:ring-2 focus:ring-white" 
-                      placeholder="Your Email"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="subject" className="block mb-2 font-medium">Subject</label>
-                  <input 
-                    type="text" 
-                    id="subject" 
-                    className="w-full p-3 rounded-md bg-white bg-opacity-20 focus:bg-opacity-30 border border-white border-opacity-30 focus:outline-none focus:ring-2 focus:ring-white" 
-                    placeholder="Subject"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block mb-2 font-medium">Message</label>
-                  <textarea 
-                    id="message" 
-                    rows="5" 
-                    className="w-full p-3 rounded-md bg-white bg-opacity-20 focus:bg-opacity-30 border border-white border-opacity-30 focus:outline-none focus:ring-2 focus:ring-white" 
-                    placeholder="Your Message"
-                  ></textarea>
-                </div>
-                <div className="text-center">
-                  <button type="submit" className="btn bg-white text-primary hover:bg-gray-100">
-                    Send Message
-                  </button>
-                </div>
-              </form>
-              
-              <div className="mt-8 text-center">
-                <p className="mb-4">Or connect with me on:</p>
-                <div className="flex justify-center space-x-4">
-                  <a href="#" className="bg-white bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition-all">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                  </a>
-                  <a href="#" className="bg-white bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition-all">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                    </svg>
-                  </a>
-                  <a href="#" className="bg-white bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition-all">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                    </svg>
-                  </a>
-                </div>
+          <div className="max-w-3xl mx-auto bg-white bg-opacity-10 rounded-lg p-8 backdrop-blur-md">
+            <p className="text-center mb-6">Ready to collaborate or just talk shop? Drop a note below or connect on LinkedIn.</p>
+            <form className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <input type="text" placeholder="Name" className="w-full p-3 rounded-md bg-white bg-opacity-20 focus:bg-opacity-30"/>
+                <input type="email" placeholder="Email" className="w-full p-3 rounded-md bg-white bg-opacity-20 focus:bg-opacity-30"/>
               </div>
+              <input type="text" placeholder="Subject" className="w-full p-3 rounded-md bg-white bg-opacity-20 focus:bg-opacity-30"/>
+              <textarea rows="5" placeholder="Message" className="w-full p-3 rounded-md bg-white bg-opacity-20 focus:bg-opacity-30"/>
+              <div className="text-center"><button type="submit" className="btn bg-white text-primary hover:bg-gray-100">Send Message</button></div>
+            </form>
+            <div className="mt-8 flex justify-center space-x-6">
+              <a href="https://www.linkedin.com/in/pranavdhruvtandon/" target="_blank" rel="noreferrer" className="hover:opacity-80">LinkedIn</a>
+              <a href="https://github.com/pranav-tandon" target="_blank" rel="noreferrer" className="hover:opacity-80">GitHub</a>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-dark text-white py-8">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <p className="mb-4">© {new Date().getFullYear()} Pranav Dhruv Tandon. All rights reserved.</p>
-          <p className="text-gray-400 text-sm">
-            AI Consultant • Bioinformatics Enthusiast • Strategic Investor
-          </p>
-        </div>
+      <footer className="bg-dark text-white py-6 text-center">
+        <p>© {new Date().getFullYear()} Pranav Dhruv Tandon • All rights reserved</p>
       </footer>
     </div>
   );
